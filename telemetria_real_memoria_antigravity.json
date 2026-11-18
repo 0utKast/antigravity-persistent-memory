@@ -1,0 +1,196 @@
+{
+  "mode": "plugin_installed",
+  "architecture": "Memoria Persistente Local-First en 4 Capas (L0-L3) para Antigravity",
+  "block_a_real_station": {
+    "global_rules_status": "OK",
+    "global_always_on_tokens_est": 1117,
+    "historical_rescue": {
+      "Mods_Fallout_AGENTS": {
+        "before_bytes": 23585,
+        "before_usage_pct": 98.3,
+        "after_bytes": 5071,
+        "after_usage_pct": 21.1,
+        "reduction_pct": 78.5
+      },
+      "Global_GEMINI_md": {
+        "before_bytes": 5321,
+        "after_bytes": 1364,
+        "reduction_pct": 74.4
+      }
+    },
+    "workspaces_summary": {
+      "DesarrolloCursos": {
+        "rules_budget_status": "OK",
+        "agents_bytes": 3860,
+        "agents_usage_pct": 16.1,
+        "l1_modular_files": 3,
+        "always_on_tokens_est": 2082,
+        "always_on_limit_tokens": 20000,
+        "always_on_usage_pct": 10.4,
+        "index_tokens_est": 339,
+        "full_diaries_tokens_est": 2612,
+        "scoped_savings_pct": 87.0,
+        "entries_verified": 7,
+        "entries_provisional": 0,
+        "scopes": [
+          "camtasia_montaje_4k",
+          "elevenlabs_locucion_es_en",
+          "guiones_visualizadores_typst"
+        ]
+      },
+      "Mods_Fallout": {
+        "rules_budget_status": "OK",
+        "agents_bytes": 5071,
+        "agents_usage_pct": 21.1,
+        "l1_modular_files": 4,
+        "always_on_tokens_est": 3557,
+        "always_on_limit_tokens": 20000,
+        "always_on_usage_pct": 17.8,
+        "index_tokens_est": 390,
+        "full_diaries_tokens_est": 3323,
+        "scoped_savings_pct": 88.3,
+        "entries_verified": 8,
+        "entries_provisional": 0,
+        "scopes": [
+          "binarios_ba2_y_compilador",
+          "combate_ia_y_actores",
+          "havok_celdas_y_nifs",
+          "misiones_escenas_y_saves"
+        ]
+      },
+      "Mods_cyberpunk2077": {
+        "rules_budget_status": "OK",
+        "agents_bytes": 6525,
+        "agents_usage_pct": 27.2,
+        "l1_modular_files": 2,
+        "always_on_tokens_est": 2749,
+        "always_on_limit_tokens": 20000,
+        "always_on_usage_pct": 13.7,
+        "index_tokens_est": 542,
+        "full_diaries_tokens_est": 5597,
+        "scoped_savings_pct": 90.3,
+        "entries_verified": 14,
+        "entries_provisional": 0,
+        "scopes": [
+          "audioware_voces_y_animacion",
+          "dialogos_ui_y_cet",
+          "entidades_dispositivos_y_combate",
+          "misiones_mappins_y_mundo"
+        ]
+      }
+    },
+    "federated_fts5_queries": [
+      {
+        "workspace": "Mods_Fallout",
+        "query": "Friendly Fire Aggression RaiderFaction",
+        "total_hits": 1,
+        "top_entry_id": "FO4-EP-001",
+        "top_title": "Fratricidio de IA (Friendly Fire) al pasar escuadrones pacíficos a hostiles",
+        "bm25_score": -11.8836,
+        "scope": "combate_ia_y_actores"
+      },
+      {
+        "workspace": "Mods_Fallout",
+        "query": "SetPosition TERM West Tek DisableNoWait",
+        "total_hits": 2,
+        "top_entry_id": "FO4-EP-005",
+        "top_title": "Prohibición de SetPosition sobre TERM/STAT en saves visitados y mutaciones en OnActivate",
+        "bm25_score": -10.8962,
+        "scope": "havok_celdas_y_nifs"
+      },
+      {
+        "workspace": "Mods_Fallout",
+        "query": "HEDR BA2 12 bits 0x00000FFF",
+        "total_hits": 2,
+        "top_entry_id": "FO4-EP-008",
+        "top_title": "Compatibilidad universal HEDR v1.0 / BA2 v1, máscara .esl 12 bits y CLR Papyrus",
+        "bm25_score": -14.708,
+        "scope": "binarios_ba2_y_compilador"
+      },
+      {
+        "workspace": "Mods_cyberpunk2077",
+        "query": "LinearWipe_0 DialogChoiceLogicController",
+        "total_hits": 1,
+        "top_entry_id": "CP77-EP-002",
+        "top_title": "Menús de diálogo nativos: captura completa, LinearWipe_0 en opción única y LootData",
+        "bm25_score": -8.6314,
+        "scope": "dialogos_ui_y_cet"
+      },
+      {
+        "workspace": "Mods_cyberpunk2077",
+        "query": "Audioware Session Ready 150 TimeDilation",
+        "total_hits": 2,
+        "top_entry_id": "CP77-EP-004",
+        "top_title": "Audioware: carrera Session/Ready de 150 ms, LocaleExt en Duration() y affectedByTimeDilation",
+        "bm25_score": -12.1194,
+        "scope": "audioware_voces_y_animacion"
+      },
+      {
+        "workspace": "DesarrolloCursos",
+        "query": "rangeEnd UTF-8 Camtasia",
+        "total_hits": 2,
+        "top_entry_id": "DC-EP-001",
+        "top_title": "Letras finales cortadas o invisibles en Callout de Camtasia por rangeEnd UTF-8",
+        "bm25_score": -6.5165,
+        "scope": "camtasia_montaje_4k"
+      },
+      {
+        "workspace": "DesarrolloCursos",
+        "query": "sinalefa siglas ache ElevenLabs",
+        "total_hits": 2,
+        "top_entry_id": "DC-EP-004",
+        "top_title": "Sinalefa en siglas deletreadas, aspiración de hache y sílabas parásitas en GPU",
+        "bm25_score": -8.1331,
+        "scope": "elevenlabs_locucion_es_en"
+      }
+    ]
+  },
+  "block_b_sandbox_lifecycle": {
+    "stage_1_day1_init": {
+      "cold_session_hook_detected_new_project": true,
+      "init_status": "INITIALIZED",
+      "scopes_created": [
+        "binarios_ba2_y_compilador",
+        "combate_ia_y_actores"
+      ]
+    },
+    "stage_2_cold_vs_warm_benchmark": {
+      "cold_turns": 5,
+      "cold_tokens": 9240,
+      "warm_turns": 1,
+      "warm_tokens": 1120,
+      "mission_tokens_saved": 8120,
+      "mission_savings_pct": 87.9,
+      "converged_pass_at_1": true
+    },
+    "stage_3_anti_poisoning_gate": {
+      "status": "REJECTED_MEMORY_POISONING",
+      "reason": "exit_code=1 (!= 0); log_errors presentes=['Cannot call AddItem() on a None object']"
+    },
+    "stage_4_two_phase_verification": {
+      "recorded_entry_id": "MLD-EP-001",
+      "initial_status": "PROVISIONAL",
+      "premature_promote_status": "REJECTED_PROMOTION",
+      "verified_status": "VERIFIED"
+    },
+    "stage_5_l1_promotion_n_ge_2": {
+      "occurrences": 2,
+      "ready_for_promotion": true,
+      "promote_status": "PROMOTED_TO_PROCEDURAL_RULE",
+      "invariant_id": "MLD-INV-01",
+      "rule_bytes": 790,
+      "agents_md_bytes_unchanged": 936
+    },
+    "stage_6_include_and_stop_guard": {
+      "include_raw_bytes": 114,
+      "include_effective_bytes": 18317,
+      "include_status": "WARNING",
+      "warm_session_banner": "[Memoria Persistente Activa — agy_lab_ws_8_qqsdp1] AGENTS.md=928/24000 B (OK) | Reglas L1=1 (OK) | Always-On=249/20000 tok (OK) | Ámbitos: binarios_ba2_y_compilador, combate_ia_y_actores | Entradas: 1 VERIFIED, 0 PROVISIONAL. Recientes: MLD-EP-001 (VERIFIED): Máscara local de 12 bits (0x00000FFF) en Light Plugins . Usa `memory_search` antes de depurar fallos no triviales y `memory_record` al consolidar soluciones verificadas.",
+      "stop_clean_decision": "stop",
+      "inflated_agents_bytes": 19088,
+      "stop_guard_decision": "continue",
+      "stop_guard_reason_prefix": "[Memoria Persistente — Guardián de Límites L0/L1] Se ha superado el presupuesto seguro tras modificar reglas en este tur",
+      "stop_antiloop_decision": "stop"
+    }
+  }
+}

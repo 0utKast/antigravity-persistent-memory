@@ -1,0 +1,9 @@
+{
+  "name": "persistent-memory",
+  "displayName": "Persistent Local-First Memory",
+  "version": "1.1.0",
+  "description": "Sistema Local-First de Memoria Persistente en 4 capas (L0-L3) con diarios Markdown, búsqueda FTS5/BM25, compuerta anti-envenenamiento, ascenso N>=2 y vigilancia automática de límites (24.000 B por archivo y 20.000 tokens Always-On).",
+  "author": {
+    "name": "Jesús Conde (0utKast)"
+  }
+}

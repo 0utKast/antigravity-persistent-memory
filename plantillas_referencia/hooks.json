@@ -1,0 +1,20 @@
+{
+  "persistent-memory-session-start": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "python C:\\Ruta\\A\\Tu\\Plugin\\persistent-memory\\memctl.py hook-session-start",
+        "timeout": 10
+      }
+    ]
+  },
+  "persistent-memory-budget-guard": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python C:\\Ruta\\A\\Tu\\Plugin\\persistent-memory\\memctl.py hook-stop",
+        "timeout": 10
+      }
+    ]
+  }
+}

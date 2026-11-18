@@ -1,0 +1,96 @@
+GUION NARRATIVO: MEMORIA PERSISTENTE LOCAL-FIRST EN ANTIGRAVITY (CAPAS L0-L3)
+Proyecto: DesarrolloCursos — De la Práctica Real en Modding y Cursos 4K a Agentes Especialistas
+Duración estimada: ~18 minutos (8 bloques cronometrados, 32 párrafos narrativos)
+Guion Técnico con Indicaciones de Pantalla y Ortografía Técnica Exacta
+
+================================================================================
+
+[00:00:00] — BLOQUE 1: CÓMO TRABAJAMOS CON ANTIGRAVITY Y LA PARADOJA DEL AGENTE AMNÉSICO
+[En pantalla: Portada de Antigravity mostrando nuestros tres espacios de trabajo activos (Mods_Fallout, Mods_cyberpunk2077 y DesarrolloCursos) con una sesión real de depuración junto a Carbon.]
+
+Cuando trabajas todos los días con Antigravity dirigiendo agentes basados en modelos avanzados como Carbon, descubres enseguida una forma de producir que hace muy poco parecía imposible. En nuestro estudio real, una sola persona asume la dirección técnica de proyectos enormes: mods completos para Fallout 4 como Crónicas del Refugio 13, expansiones de compañeros con inteligencia artificial local como Piper Wright, misiones de mundo abierto en Cyberpunk 2077 y una línea entera de producción automatizada de cursos en cuatro K.
+
+En ese flujo diario, tú actúas como arquitecto, planificador y controlador de calidad en vivo, mientras tus agentes escriben ensambladores binarios, scripts de juego, interfaces y validadores automáticos. El punto de partida del modelo resulta impresionante: posee un dominio profundo de la teoría general de motores comerciales, conoce máquinas virtuales, grafos de escena y gestión de memoria tal como los expone Jason Gregory en su obra sobre arquitectura de motores de videojuegos.
+
+Sin embargo, en cuanto bajas de la teoría al terreno práctico frente a un ejecutable real en Windows, aparece un fenómeno constante que cualquiera que trabaje en serio con agentes reconoce al instante. Los amplios conocimientos generales de un modelo chocan una y otra vez contra comportamientos empíricos inesperados de cada motor, cada compilador y cada versión concreta del software.
+
+Cada vez que aparece uno de esos fallos sutiles, el agente investiga contigo los archivos de registro, ejecuta pruebas controladas, descarta hipótesis falsas y acaba dando con la causa raíz exacta. Pero si esa investigación muere al cerrar la conversación, al abrir una sesión nueva al día siguiente el mismo agente brillante sufre amnesia operativa y vuelve a caer en la misma trampa. Evitar que se pierda ese aprendizaje real es exactamente el motivo por el que diseñamos nuestro sistema de memoria persistente.
+
+[00:02:15] — BLOQUE 2: TRAMPAS INESPERADAS EN LA TRINCHERA REAL DEL MODDING Y LA PRODUCCIÓN 4K
+[En pantalla: Tabla comparativa mostrando casos reales capturados de nuestros diarios: FO4-EP-001, FO4-EP-005, FO4-EP-008, CP77-EP-002, CP77-EP-004 y DC-EP-001.]
+
+Veamos con ejemplos concretos sacados de nuestras sesiones reales de trabajo qué clase de conocimiento práctico está en juego cuando creamos mods o herramientas audiovisuales. No hablamos de teoría de libros, sino de aristas reales que solo descubres compilando, arrancando el juego y leyendo registros de error en vivo.
+
+Fíjate en nuestro primer caso real en Fallout 4 dentro del mod Crónicas del Refugio 13. Necesitábamos que un escuadrón pacífico pasara a ser hostil tras terminar un diálogo. La intuición lógica del agente fue quitarlos de la facción aliada del jugador con agresividad muy alta y lanzar el comando de combate. En el papel parecía perfecto; dentro del juego en Adytum, los enemigos se disparaban entre ellos mismos porque al quedar neutrales entre sí, el nivel máximo de agresividad ordenaba atacar a cualquier personaje neutral más cercano que el jugador. La solución real exigía agruparlos primero en una facción común con autoalianza y bajar la agresividad a uno punto cero.
+
+En otro episodio práctico en las instalaciones de West Tek, el agente movió un terminal de ordenador persistente mediante código dentro de una partida ya guardada. Visualmente la consola cambiaba de sitio, pero al activarla la cámara se desincronizaba y el terminal desaparecía delante de tus ojos. ¿Por qué? Porque en celdas ya grabadas dentro de la partida, el motor actualiza la malla visual pero mantiene congelada la coordenada lógica antigua, disparando una protección de distancia que deshabilita el objeto en mitad de la animación.
+
+Y lo mismo ocurre al salir a Cyberpunk 2077 o al montaje de vídeo en cuatro K. En Cyberpunk descubrimos que el evento de sesión lista se dispara ciento cincuenta milisegundos antes de terminar de cargar los bancos de voz externos, dejando mudo todo el mod si no resincronizas en pasos concretos; y que el escáner óptico del jugador ralentiza la reproducción del audio mientras los temporizadores siguen corriendo en tiempo real. Incluso al generar rótulos en Camtasia descubrimos que su motor C++ indexa los rangos de color en bytes UTF-8 y no en caracteres Unicode: basta una tilde o una raya tipográfica para que las últimas letras de un título salgan negras o invisibles.
+
+Cada una de estas investigaciones cuesta compilaciones, pruebas dentro del juego y miles de tokens de análisis. Todo ese esfuerzo representa aprendizaje empírico real de altísimo valor. Si lo guardas de forma estructurada y verificable, el agente deja de improvisar desde cero y acumula auténtica veteranía sesión tras sesión.
+
+[00:05:15] — BLOQUE 3: EL LÍMITE OCULTO EN PRODUCCIÓN — 24.000 BYTES Y 20.000 TOKENS
+[En pantalla: Comparativa de tamaño de Mods_Fallout/AGENTS.md antes (23.585 B / 98,3 %) y después (5.071 B / 21,1 %), junto con GEMINI.md global (5.321 B -> 1.364 B).]
+
+Cuando empezamos a anotar estas lecciones, cometimos el error más natural al principio: ir añadiendo reglas y hallazgos uno tras otro dentro del archivo de instrucciones principal en la raíz del proyecto de Fallout 4. Durante varias semanas funcionó de maravilla y evitó muchos fallos repetidos, hasta que estuvimos a punto de chocar contra un muro silencioso de la propia plataforma.
+
+Revisando las especificaciones internas de Antigravity descubrimos dos límites de presupuesto críticos que gobiernan qué recuerda realmente el agente en cada turno. El primero es un tope duro de veinticuatro mil bytes por archivo de regla, calculado además después de expandir cualquier archivo externo enlazado en el texto: en cuanto un archivo supera esa frontera, el sistema lo recorta por líneas de forma silenciosa y el agente deja de leer las últimas reglas.
+
+Cuando auditamos nuestro proyecto de Fallout 4, el archivo principal había escalado hasta los veintitrés mil quinientos ochenta y cinco bytes: estábamos al noventa y ocho coma tres por ciento del límite duro, a un solo párrafo del truncamiento silencioso. Y al revisar el archivo de reglas globales del sistema vimos un problema hermano: acumulaba más de cinco mil trescientos bytes de notas viejas y duplicados de proyectos ya terminados, restando espacio al segundo gran tope de Antigravity, el presupuesto agregado de veinte mil tokens compartido por todas las reglas siempre activas.
+
+Ahí comprendimos que no bastaba con tener buena memoria escrita en un archivo plano gigante. Necesitábamos una arquitectura de ingeniería de contexto capaz de crecer durante meses sin saturar jamás la ventana de atención ni acercarse a esos límites técnicos.
+
+[00:07:35] — BLOQUE 4: DUNCAN DAVIDSON Y LA TAXONOMÍA O'REILLY — LOCAL-FIRST Y ESCOTILLA DE ESCAPE
+[En pantalla: Diagrama con los 4 pilares de Duncan Davidson (Memory for Personal AI) y la taxonomía en 4 memorias de O'Reilly Learning.]
+
+En busca de la mejor arquitectura posible, combinamos la práctica diaria de nuestros proyectos con la literatura técnica más sólida del catálogo de O'Reilly mediante nuestro conector MCP. El punto de inflexión llegó al estudiar la charla de Duncan Davidson sobre memoria para inteligencia artificial personal y su concepto de hogar propio para el contexto.
+
+Duncan Davidson diagnostica un fallo grave en la industria actual: cada herramienta comercial construye su propia versión fragmentada de lo que sabes en silos cerrados en la nube, de forma que cambiar de modelo o de ordenador te obliga a empezar de cero. Frente a eso defiende un enfoque centrado en almacenamiento local y el principio de la escotilla de escape: la memoria canónica del proyecto debe residir en archivos Markdown limpios, legibles por personas y versionados con Git junto al propio código, sin quedar encerrada en bases de datos opacas.
+
+Completamos la visión de Davidson con cuatro piezas clave de autores recientes de O'Reilly como Benjamin Labaschin, Ksenia Se, Pete Johnson, Richmond Alake, Drew Breunig, Addy Osmani y Nicole Koenigstein. Primero, distinguir cuatro memorias: la memoria de trabajo volátil del chat actual, la memoria semántica congelada en el modelo, la memoria episódica que registra incidentes reales vividos en tu ordenador y la memoria procedimental con las leyes activas del proyecto.
+
+Segundo, aplicar el acceso por ámbitos para combatir el deterioro de contexto y proteger la consolidación contra el envenenamiento de memoria. Como advierten Ksenia Se y Pete Johnson, si permites que un agente guarde una suposición falsa antes de comprobarla contra el compilador o contra el juego vivo, esa hipótesis errónea infectará todas las sesiones futuras en lugar de ayudarlas.
+
+[00:10:00] — BLOQUE 5: ARQUITECTURA REAL EN CUATRO CAPAS (L0-L3) Y FEDERACIÓN ENTRE PROYECTOS
+[En pantalla: Esquema visual de las 4 capas reales L0, L1, L2 y L3 desplegadas en DesarrolloCursos, Mods_Fallout y Mods_cyberpunk2077.]
+
+A partir de esos principios construimos e instalamos nuestro propio plugin global de memoria persistente en cuatro capas, operativo hoy mismo tanto en proyectos nuevos desde el primer día como en nuestros tres repositorios activos.
+
+La capa cero es la constitución mínima en la raíz del proyecto, siempre cargada al inicio de cada sesión. Tras refactorizarla, ocupa apenas cinco mil setenta y un bytes en el proyecto de Fallout 4, seis mil quinientos veinticinco en el de Cyberpunk 2077 y tres mil ochocientos sesenta en este estudio de cursos, reduciendo además el archivo de reglas globales a mil trescientos sesenta y cuatro bytes. Nunca guarda diarios largos: solo contiene las leyes nucleares del proyecto y un puntero directo hacia el índice.
+
+La capa uno almacena las reglas procedimentales modulares dentro de una carpeta dedicada de reglas condicionales. Gracias a la carga bajo demanda, estos archivos consumen apenas unas decenas de tokens en reposo y se inyectan completos únicamente cuando el agente trabaja en ese subdominio concreto, como el empaquetado de archivos de juego, los diálogos con voz o la fonética de locución.
+
+Debajo vive la capa dos, nuestra verdadera escotilla de escape: un índice ligero por ámbitos que enlaza a diarios episódicos separados en Markdown bajo control de versiones Git. En lugar de cargar miles de tokens de golpe al empezar una conversación, el índice ocupa entre trescientos treinta y nueve y quinientos cuarenta y dos tokens según el proyecto, logrando un ahorro fijo de contexto de entre el ochenta y siete y el noventa coma tres por ciento.
+
+Y la capa tres añade velocidad y conexión entre proyectos mediante una caché efímera en SQLite con búsqueda por texto completo FTS5 y ordenación BM25, expuesta a través de un servidor MCP local de cinco herramientas. De este modo, cuando desarrollamos un nuevo curso aquí en el estudio, el agente puede consultar en modo de solo lectura las experiencias reales verificadas en los repositorios de Fallout 4 o Cyberpunk 2077 sin mezclar ni alterar jamás sus archivos.
+
+[00:12:25] — BLOQUE 6: ANATOMÍA DEL MOTOR — TRAMPA SEMÁNTICA, COMPUERTA ANTI-ENVENENAMIENTO Y GUARDIÁN STOP
+[En pantalla: Se abre visualizador_memoria_persistente_antigravity.html recorriendo los botones 3, 4, 5 y 6 del Code Spotlight.]
+
+Observemos ahora aquí en nuestro visualizador intermedio cómo opera por dentro el motor real que gobierna estas cuatro capas, escrito en Python estándar sin dependencias externas para que sea ligero y portable.
+
+Un primer detalle decisivo fue la búsqueda en FTS5. En modding buscamos constantemente identificadores con puntos, guiones o dos puntos, como registros de compilación o códigos de entrada, que rompen la sintaxis estándar de búsqueda si se envían crudos. Nuestro saneador de términos extrae palabras Unicode significativas, descarta dígitos sueltos de ruido y construye consultas seguras insensibles a tildes para recuperar el episodio exacto en milisegundos.
+
+El segundo mecanismo protege la calidad de cada lección aprendida: la compuerta anti-envenenamiento con validación en dos fases. La herramienta de registro rechaza inmediatamente cualquier intento de grabar una solución si el código de salida del compilador es distinto de cero, si quedan errores en el log o si falta una explicación clara tanto de la causa raíz como de la evidencia verificada y de la trampa semántica descartada. Cuando un cambio compila en verde pero todavía no se ha probado dentro del juego real, queda marcado como provisional y tiene prohibido ascender a regla permanente hasta superar la verificación en vivo.
+
+Cuando una entrada ya verificada vuelve a aparecer dos o más veces en sesiones posteriores, nuestro gestor de ciclo de vida la promueve de forma autónoma hacia una regla modular en la capa uno, respetando un tope seguro de dieciocho mil bytes por archivo para no saturar nunca la capa cero.
+
+Por último, cerramos los puntos ciegos con dos ganchos de ciclo de vida nativos de Antigravity. Al arrancar cada conversación, un gancho de inicio verifica si el proyecto ya tiene memoria inicializada, reconstruye el índice si algún diario cambió a mano y guarda una línea base de tamaños. Al concluir el turno, un gancho de parada comprueba si alguna regla modificada creció por encima de los umbrales seguros —incluyendo cualquier anexo externo expandido— y pide al agente que refactorice antes de cerrar, protegido siempre contra bucles infinitos y sin tocar jamás los permisos nativos de herramientas.
+
+[00:15:10] — BLOQUE 7: LABORATORIO EN VIVO — SIMULACIÓN PASS@1 Y TELEMETRÍA REAL DE NUESTRA ESTACIÓN
+[En pantalla: Columna derecha del visualizador HTML ejecutando las 6 etapas paso a paso y terminal ejecutando laboratorio_memoria_persistente_antigravity.py.]
+
+Comprobemos todo el ciclo en acción ejecutando tanto la auditoría real de nuestra estación como el laboratorio determinista en un entorno temporal completamente aislado.
+
+En la auditoría real en vivo comprobamos que los tres proyectos y las reglas globales se mantienen en estado saludable con veintinueve episodios verificados ya consolidados y menos del dieciocho por ciento consumido sobre el techo de veinte mil tokens para reglas siempre activas. Las consultas federadas recuperan al instante el episodio exacto sobre fuego amigo en facciones, la máscara de doce bits en plugins ligeros, el fallo de opción única en diálogos o el ajuste de bytes UTF-8 en rótulos de vídeo.
+
+A continuación, dentro del simulador aislado de seis etapas, comparamos una misión real sobre plugins ligeros frente a un agente arrancando en frío. Sin memoria previa, el agente asume la máscara errónea de veinticuatro bits, compila, falla en partida, prueba una hipótesis falsa sobre el orden de carga y acaba necesitando cinco turnos y nueve mil doscientos cuarenta tokens.
+
+Con nuestro sistema de cuatro capas, tras bloquear primero un intento fraudulento de guardar la hipótesis falsa con errores en el registro, consolidar el hallazgo provisional y verificarlo en partida limpia, el agente de la segunda sesión lee el índice ligero, consulta el motor de búsqueda y aplica la solución correcta a la primera en un solo turno consumiendo mil ciento veinte tokens: un ochenta y siete coma nueve por ciento de ahorro en tokens de misión y cuatro ciclos completos de compilación y reinicio del juego ahorrados.
+
+[00:17:00] — BLOQUE 8: CIERRE — DE ASISTENTE GENERALISTA A ESPECIALISTA VETERANO
+[En pantalla: Árbol de archivos plantillas_referencia/ en Git junto a las métricas finales de ahorro y la bibliografía oficial O'Reilly.]
+
+Piénsalo con perspectiva práctica. Cada pocos meses aparece una generación nueva de modelos más potentes y cambian las herramientas que los rodean. Pero ningún modelo base, por brillante que sea su conocimiento enciclopédico, ha vivido todavía las particularidades exactas de tus proyectos, tus compiladores, tus versiones de motor ni tus estándares de calidad.
+
+Cuando transformas cada fallo real resuelto en una entrada verificada con trampa semántica y evidencia empírica, y dejas que las lecciones maduras asciendan de forma ordenada a reglas modulares bajo un presupuesto vigilado, ocurre un salto cualitativo extraordinario: tus agentes dejan de empezar cada día como recién llegados y se convierten, con la práctica real acumulada, en auténticos especialistas veteranos de tu estudio. Tienes el laboratorio ejecutable, el visualizador interactivo y las plantillas listas en el repositorio para empezar hoy mismo en tus propios proyectos.

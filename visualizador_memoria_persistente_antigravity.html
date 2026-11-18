@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Code Spotlight &amp; Live Lab • Memoria Persistente L0–L3 en Antigravity</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-page: #0b0f19;
+      --bg-panel: #111827;
+      --bg-editor: #1e1e1e;
+      --bg-header: #252526;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent-strong: #0284c7;
+      --green: #4ade80;
+      --amber: #fbbf24;
+      --red: #f87171;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --kw: #c586c0;
+      --st: #569cd6;
+      --tp: #4ec9b0;
+      --vr: #9cdcfe;
+      --fn: #dcdcaa;
+      --nm: #b5cea8;
+      --str: #ce9178;
+      --cm: #6a9955;
+      scrollbar-color: #475569 #0f172a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .container {
+      max-width: 1520px;
+      height: 100vh;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(2, 132, 199, 0.22);
+      border: 1px solid var(--accent);
+      padding: 2px 9px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #f8fafc;
+    }
+
+    .subtitle {
+      margin: 2px 0 0 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .header-meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 12px;
+      flex-shrink: 0;
+    }
+
+    .header-meta strong { color: #f8fafc; }
+
+    .interactive-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .btn:hover { border-color: var(--accent); color: #ffffff; }
+
+    .btn.active {
+      background: var(--accent-strong);
+      border-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-sim {
+      background: #0f291e;
+      border-color: #22c55e;
+      color: #86efac;
+    }
+
+    .btn-sim:hover { background: #14532d; color: #ffffff; }
+
+    .explanation-banner {
+      background: rgba(14, 116, 144, 0.22);
+      border-left: 4px solid var(--accent);
+      padding: 9px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #e0f2fe;
+      flex-shrink: 0;
+    }
+
+    .explanation-banner strong { color: #7dd3fc; }
+
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .editor-window, .sim-window {
+      background: var(--bg-editor);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .sim-window { background: var(--bg-panel); }
+
+    .window-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .dots { display: inline-flex; gap: 6px; margin-right: 10px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: #22c55e; }
+
+    .code-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+      font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+      font-size: 12.2px;
+      line-height: 1.5;
+    }
+
+    .code-line {
+      display: flex;
+      padding: 1px 14px 1px 0;
+      border-left: 3px solid transparent;
+      transition: opacity 0.22s ease, background-color 0.22s ease;
+      white-space: pre;
+    }
+
+    .code-line.spotlight {
+      background: rgba(56, 189, 248, 0.13);
+      border-left-color: var(--accent);
+      opacity: 1;
+    }
+
+    .code-line.dimmed {
+      opacity: 0.26;
+    }
+
+    .ln {
+      width: 44px;
+      text-align: right;
+      padding-right: 14px;
+      color: #64748b;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .kw { color: var(--kw); }
+    .st { color: var(--st); }
+    .tp { color: var(--tp); }
+    .vr { color: var(--vr); }
+    .fn { color: var(--fn); }
+    .nm { color: var(--nm); }
+    .str { color: var(--str); }
+    .cm { color: var(--cm); font-style: italic; }
+
+    .sim-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sim-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .step-pill {
+      margin-left: auto;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #7dd3fc;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .metric-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+
+    .metric-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .metric-val {
+      font-weight: 700;
+      color: #f8fafc;
+      font-family: Consolas, monospace;
+    }
+
+    .bar-track {
+      height: 7px;
+      background: #1e293b;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.35s ease, background-color 0.3s ease;
+      background: var(--accent);
+    }
+
+    .stage-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+    }
+
+    .stage-box h3 {
+      margin: 0 0 4px 0;
+      font-size: 13.5px;
+      color: #f8fafc;
+    }
+
+    .stage-box p {
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .terminal-log {
+      flex: 1;
+      min-height: 150px;
+      background: #070b12;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 11.8px;
+      line-height: 1.48;
+      overflow-y: auto;
+    }
+
+    .log-entry { margin-bottom: 6px; }
+    .log-ok { color: var(--green); }
+    .log-warn { color: var(--amber); }
+    .log-err { color: var(--red); }
+    .log-info { color: var(--accent); }
+    .log-muted { color: var(--text-muted); }
+
+    .station-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mini-ws {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+
+    .mini-ws strong { display: block; color: #7dd3fc; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <span class="badge">Antigravity · Arquitectura L0–L3 en Producción</span>
+        <h1>Memoria Persistente <em>Local-First</em>: De la Práctica Real a Agentes Especialistas</h1>
+        <p class="subtitle">Inspector de código real (<code>memctl.py</code> + <code>hooks.json</code> + diarios Markdown) y simulador de ciclo de vida verificado</p>
+      </div>
+      <div class="header-meta">
+        <div><strong>Rescate real:</strong> <code>Mods_Fallout</code> 23.585 B → 5.071 B (<code>-78,5 %</code>)</div>
+        <div><strong>Presupuesto:</strong> Límite 24.000 B · Techo <code>Always-On</code> 20.000 tokens</div>
+      </div>
+    </header>
+
+    <div class="interactive-toolbar">
+      <div class="btn-group" id="spotlightButtons">
+        <button class="btn active" data-focus="s1">1. Capas L0/L1 (AGENTS.md + model_decision)</button>
+        <button class="btn" data-focus="s2">2. Enrutador L2 y Federación MCP</button>
+        <button class="btn" data-focus="s3">3. Trampas Reales (Fallout 4 &amp; Cyberpunk)</button>
+        <button class="btn" data-focus="s4">4. Motor SQLite FTS5 + BM25 (Capa L3)</button>
+        <button class="btn" data-focus="s5">5. Compuerta PROVISIONAL→VERIFIED y N≥2</button>
+        <button class="btn" data-focus="s6">6. Hooks SessionStart y Guardián Stop</button>
+      </div>
+    </div>
+
+    <div class="explanation-banner" id="bannerText">
+      <strong>1. Capas L0/L1:</strong> Mantener <code>AGENTS.md</code> compacto (&lt; 12.000 B) evita el truncamiento silencioso de los 24.000 B y delega el detalle técnico a reglas modulares con <code>trigger: model_decision</code>.
+    </div>
+
+    <div class="workbench-grid">
+      <section class="editor-window">
+        <div class="window-header">
+          <div>
+            <span class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></span>
+            <span>arquitectura_memoria_l0_l3.py · persistent-memory</span>
+          </div>
+          <span id="activeFileBadge">Capa L0 / L1</span>
+        </div>
+        <div class="code-scroll" id="codeContainer"></div>
+      </section>
+
+      <section class="sim-window">
+        <div class="window-header">
+          <span>Simulador en Vivo: Ciclo de Especialización del Agente (6 Etapas)</span>
+          <span id="simStatusBadge" class="log-info">Listo</span>
+        </div>
+        <div class="sim-body">
+          <div class="sim-controls">
+            <button class="btn btn-sim" id="btnRunAll">▶ Ejecutar Simulación</button>
+            <button class="btn" id="btnNextStep">⏭ Paso a Paso</button>
+            <button class="btn" id="btnReset">↺ Reiniciar</button>
+            <span class="step-pill" id="stepCounter">Etapa 0 / 6</span>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-head"><span>AGENTS.md (Tope 24.000 B)</span><span class="metric-val" id="mBytes">928 B</span></div>
+              <div class="bar-track"><div class="bar-fill" id="barBytes"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-head"><span>Always-On (Tope 20.000 tok)</span><span class="metric-val" id="mAgg">2.082 tok</span></div>
+              <div class="bar-track"><div class="bar-fill" id="barAgg"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-head"><span>Ahorro Índice L2 (Scoped Access)</span><span class="metric-val" id="mSavings">88,3 %</span></div>
+              <div class="bar-track"><div class="bar-fill" id="barSavings"></div></div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-head"><span>Convergencia en Misión (Pass@1)</span><span class="metric-val" id="mPass">Frío (5 turnos)</span></div>
+              <div class="bar-track"><div class="bar-fill" id="barPass"></div></div>
+            </div>
+          </div>
+
+          <div class="stage-box" id="stageBox">
+            <h3 id="stageTitle">Estado Inicial: Estación Auditada</h3>
+            <p id="stageDesc">Pulsa «▶ Ejecutar Simulación» o «⏭ Paso a Paso» para observar cómo el agente pasa de cometer errores repetidos en frío a convertirse en un especialista verificado con Pass@1 y vigilancia de presupuestos.</p>
+          </div>
+
+          <div class="station-cards">
+            <div class="mini-ws"><strong>DesarrolloCursos</strong>3.860 B · 2.082 tok · 87,0 % ahorro · 7 V</div>
+            <div class="mini-ws"><strong>Mods_Fallout</strong>5.071 B · 3.557 tok · 88,3 % ahorro · 8 V</div>
+            <div class="mini-ws"><strong>Mods_cyberpunk2077</strong>6.525 B · 2.749 tok · 90,3 % ahorro · 14 V</div>
+          </div>
+
+          <div class="terminal-log" id="terminalLog">
+            <div class="log-entry log-muted">[init] Estación real verificada: 29 episodios VERIFIED activos (DC: 7, FO4: 8, CP77: 14).</div>
+            <div class="log-entry log-muted">[init] Regla global GEMINI.md depurada: 5.321 B → 1.364 B (1.117 tok Always-On globales).</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const CODE_LINES = [
+      { s: "s1", html: `<span class="cm"># === 1. CAPAS L0 &amp; L1: CONSTITUCIÓN COMPACTA + REGLAS CONDICIONALES ===</span>` },
+      { s: "s1", html: `<span class="vr">RULE_HARD_LIMIT_BYTES</span> = <span class="nm">24000</span>    <span class="cm"># Truncamiento silencioso por archivo en Antigravity</span>` },
+      { s: "s1", html: `<span class="vr">RULE_WARN_LIMIT_BYTES</span> = <span class="nm">16000</span>    <span class="cm"># Alerta temprana para extraer detalle a Capa L1</span>` },
+      { s: "s1", html: `<span class="vr">SAFE_PROMOTE_LIMIT_BYTES</span> = <span class="nm">18000</span> <span class="cm"># Tope seguro por archivo en .agents/rules/*.md</span>` },
+      { s: "s1", html: `<span class="vr">AGGREGATE_TOKEN_LIMIT</span> = <span class="nm">20000</span>    <span class="cm"># Presupuesto conjunto Always-On (global + workspace)</span>` },
+      { s: "s1", html: `<span class="kw">def</span> <span class="fn">parse_rule_trigger</span>(path: <span class="tp">Path</span>, text: <span class="tp">str</span>) -&gt; <span class="tp">str</span>:` },
+      { s: "s1", html: `    <span class="kw">if</span> path.name.upper() <span class="kw">in</span> (<span class="str">"AGENTS.MD"</span>, <span class="str">"GEMINI.MD"</span>) <span class="kw">and</span> path.parent.name.lower() != <span class="str">"rules"</span>:` },
+      { s: "s1", html: `        <span class="kw">return</span> <span class="str">"always_on"</span>  <span class="cm"># Solo ~12 KB saludables; sin reglas de nicho dentro</span>` },
+      { s: "s1", html: `    <span class="kw">if</span> re.search(<span class="str">r"^trigger\s*:\s*model_decision\b"</span>, text, flags=re.M | re.I):` },
+      { s: "s1", html: `        <span class="kw">return</span> <span class="str">"model_decision"</span>  <span class="cm"># Carga bajo demanda (~30 tokens en reposo)</span>` },
+      { s: "s2", html: `` },
+      { s: "s2", html: `<span class="cm"># === 2. ENRUTADOR L2 (SCOPED ACCESS) Y FEDERACIÓN MCP SOLO LECTURA ===</span>` },
+      { s: "s2", html: `<span class="vr">WORKSPACES_REGISTRY</span> = {` },
+      { s: "s2", html: `    <span class="str">"DesarrolloCursos"</span>:   {<span class="str">"prefix"</span>: <span class="str">"DC"</span>,   <span class="str">"savings_pct"</span>: <span class="nm">87.0</span>},` },
+      { s: "s2", html: `    <span class="str">"Mods_Fallout"</span>:       {<span class="str">"prefix"</span>: <span class="str">"FO4"</span>,  <span class="str">"savings_pct"</span>: <span class="nm">88.3</span>},` },
+      { s: "s2", html: `    <span class="str">"Mods_cyberpunk2077"</span>: {<span class="str">"prefix"</span>: <span class="str">"CP77"</span>, <span class="str">"savings_pct"</span>: <span class="nm">90.3</span>},` },
+      { s: "s2", html: `}` },
+      { s: "s2", html: `<span class="kw">def</span> <span class="fn">resolve_workspace</span>(alias_or_path: <span class="tp">str</span>) -&gt; <span class="tp">Path</span>:` },
+      { s: "s2", html: `    <span class="cm"># Permite desde DesarrolloCursos consultar casos reales de FO4/CP77 en solo lectura</span>` },
+      { s: "s2", html: `    <span class="kw">return</span> Path(REGISTRY[<span class="str">"workspaces"</span>][alias_or_path][<span class="str">"path"</span>]).resolve()` },
+      { s: "s3", html: `` },
+      { s: "s3", html: `<span class="cm"># === 3. TRAMPAS REALES CAPTURADAS EN MODDING (TRAMPA SEMÁNTICA + PROVENANCE) ===</span>` },
+      { s: "s3", html: `<span class="vr">REAL_EPISODES</span> = [` },
+      { s: "s3", html: `    (<span class="str">"FO4-EP-001"</span>, <span class="str">"Friendly Fire en Adytum"</span>, <span class="str">"Aggression=2.0 ataca Neutrales -&gt; usar RaiderFaction self=Ally"</span>),` },
+      { s: "s3", html: `    (<span class="str">"FO4-EP-008"</span>, <span class="str">"Plugins .esl y .ba2 v1"</span>, <span class="str">"Mascara 12 bits 0x00000FFF y HEDR v1.0 para 1.10.163 + Next-Gen"</span>),` },
+      { s: "s3", html: `    (<span class="str">"CP77-EP-002"</span>, <span class="str">"Opcion unica invisible"</span>, <span class="str">"Envolver DialogChoiceLogicController con LinearWipe_0.transition=0.00"</span>),` },
+      { s: "s3", html: `    (<span class="str">"CP77-EP-004"</span>, <span class="str">"Audioware 150ms &amp; [TAB]"</span>, <span class="str">"SyncAudiowareEngineState + affectedByTimeDilation = false"</span>),` },
+      { s: "s3", html: `    (<span class="str">"DC-EP-001"</span>, <span class="str">"Callout Camtasia UTF-8"</span>, <span class="str">"rangeEnd = len(text.encode('utf-8')) para no cortar ultimas letras"</span>),` },
+      { s: "s3", html: `]` },
+      { s: "s4", html: `` },
+      { s: "s4", html: `<span class="cm"># === 4. CAPA L3: ÍNDICE EFÍMERO SQLITE FTS5 + BM25 INSENSIBLE A TILDES ===</span>` },
+      { s: "s4", html: `<span class="kw">def</span> <span class="fn">sanitize_fts_terms</span>(query: <span class="tp">str</span>) -&gt; <span class="tp">list</span>[<span class="tp">str</span>]:` },
+      { s: "s4", html: `    tokens = [t <span class="kw">for</span> t <span class="kw">in</span> re.findall(<span class="str">r"\w+"</span>, query) <span class="kw">if</span> len(t) &gt;= <span class="nm">2</span>]` },
+      { s: "s4", html: `    <span class="kw">return</span> tokens  <span class="cm"># Evita errores de MATCH en 'Papyrus.0.log', 'FO4-EP-001', 'TweakDB:SetFlat'</span>` },
+      { s: "s4", html: `<span class="vr">FTS_SQL</span> = <span class="str">"""SELECT entry_id, bm25(episodes_fts, 8.0, 5.0, 1.0, 2.0, 2.0, 6.0, 3.0, 4.0, 5.0, 1.5, 0.5)</span>` },
+      { s: "s4", html: `<span class="str">FROM episodes_fts WHERE episodes_fts MATCH ? AND status NOT LIKE 'SUPERSEDED_BY%' ORDER BY rank"""</span>` },
+      { s: "s5", html: `` },
+      { s: "s5", html: `<span class="cm"># === 5. COMPUERTA ANTI-ENVENENAMIENTO (PROVISIONAL -&gt; VERIFIED) Y ASCENSO N &gt;= 2 ===</span>` },
+      { s: "s5", html: `<span class="kw">def</span> <span class="fn">record_memory</span>(..., semantic_trap: <span class="tp">str</span>, provenance: <span class="tp">str</span>, exit_code: <span class="tp">int</span>, log_errors: <span class="tp">list</span>):` },
+      { s: "s5", html: `    <span class="kw">if</span> exit_code != <span class="nm">0</span> <span class="kw">or</span> log_errors <span class="kw">or</span> len(semantic_trap) &lt; <span class="nm">5</span> <span class="kw">or</span> len(provenance) &lt; <span class="nm">10</span>:` },
+      { s: "s5", html: `        <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"REJECTED_MEMORY_POISONING"</span>}  <span class="cm"># Cero conjeturas en el diario</span>` },
+      { s: "s5", html: `<span class="kw">def</span> <span class="fn">promote_when_mature</span>(entry: <span class="tp">DiaryEntry</span>):` },
+      { s: "s5", html: `    <span class="kw">if</span> entry.status == <span class="str">"VERIFIED"</span> <span class="kw">and</span> entry.occurrences &gt;= <span class="nm">2</span>:` },
+      { s: "s5", html: `        <span class="cm"># Asciende a .agents/rules/*.md (&lt;= 18.000 B) manteniendo AGENTS.md intacto</span>` },
+      { s: "s5", html: `        write_modular_rule(entry, trigger=<span class="str">"model_decision"</span>)` },
+      { s: "s6", html: `` },
+      { s: "s6", html: `<span class="cm"># === 6. HOOKS DE CICLO DE VIDA: SESSIONSTART + GUARDIÁN STOP ANTI-BUCLE ===</span>` },
+      { s: "s6", html: `<span class="kw">def</span> <span class="fn">handle_stop</span>(payload: <span class="tp">dict</span>) -&gt; <span class="tp">dict</span>:` },
+      { s: "s6", html: `    <span class="kw">if</span> payload.get(<span class="str">"continuationActive"</span>) <span class="kw">or</span> payload.get(<span class="str">"terminationReason"</span>) != <span class="str">"NO_TOOL_CALL"</span>:` },
+      { s: "s6", html: `        <span class="kw">return</span> {<span class="str">"decision"</span>: <span class="str">"stop"</span>}  <span class="cm"># Garantía estricta anti-bucle</span>` },
+      { s: "s6", html: `    audit = audit_single_workspace(workspace)  <span class="cm"># Expande @[label](ruta) hasta depth=3</span>` },
+      { s: "s6", html: `    <span class="kw">if</span> grew_above_budget(audit, baseline):` },
+      { s: "s6", html: `        <span class="kw">return</span> {<span class="str">"decision"</span>: <span class="str">"continue"</span>, <span class="str">"reason"</span>: <span class="str">"Refactoriza a .agents/rules/ con model_decision"</span>}` },
+      { s: "s6", html: `    <span class="kw">return</span> {<span class="str">"decision"</span>: <span class="str">"stop"</span>}` }
+    ];
+
+    const FOCUS_INFO = {
+      s1: {
+        badge: "Capa L0 / L1",
+        banner: "<strong>1. Capas L0/L1:</strong> Mantener <code>AGENTS.md</code> compacto (&lt; 12.000 B) evita el truncamiento silencioso de los 24.000 B y delega el detalle técnico a reglas modulares con <code>trigger: model_decision</code>."
+      },
+      s2: {
+        badge: "Capa L2 + Federación",
+        banner: "<strong>2. Enrutador L2 y Federación MCP:</strong> El índice por ámbitos ahorra entre <strong>87,0 % y 90,3 %</strong> de contexto inicial y permite consultar casos verificados de <code>Mods_Fallout</code> y <code>Mods_cyberpunk2077</code> sin mezclar repositorios."
+      },
+      s3: {
+        badge: "Experiencia Empírica",
+        banner: "<strong>3. Trampas Reales:</strong> Cada investigación costosa (<code>Aggression=2.0</code>, <code>0x00000FFF</code>, <code>LinearWipe_0</code>, <code>Session/Ready 150ms</code>, <code>rangeEnd UTF-8</code>) deja constancia de la trampa descartada y la solución probada."
+      },
+      s4: {
+        badge: "Capa L3 (SQLite FTS5)",
+        banner: "<strong>4. Motor FTS5 + BM25:</strong> La caché efímera en SQLite sanea caracteres como puntos o dos puntos para recuperar episodios exactos en milisegundos sin cargar los diarios completos."
+      },
+      s5: {
+        badge: "Anti-Poisoning + N≥2",
+        banner: "<strong>5. Compuerta y Ascenso:</strong> <code>record_memory</code> bloquea hipótesis con fallos de compilación/log; tras probar en juego real (<code>VERIFIED</code>) y repetirse <code>N ≥ 2</code>, asciende automáticamente a Capa L1."
+      },
+      s6: {
+        badge: "Hooks SessionStart + Stop",
+        banner: "<strong>6. Vigilancia Continua:</strong> Al iniciar sesión se registra la línea base y al finalizar cada turno el hook <code>Stop</code> verifica expansiones <code>@[label](ruta)</code> y topes <code>16 KB / 18 KB / 20.000 tok</code> sin interferir con permisos."
+      }
+    };
+
+    const SIM_STAGES = [
+      {
+        step: "Etapa 1 / 6",
+        focus: "s1",
+        title: "Etapa 1 — Sesión en Frío + Detección Día 1",
+        desc: "El agente entra a un repositorio nuevo. El hook SessionStart detecta la ausencia de índice, inicializa las capas L0–L3 y mide el presupuesto Always-On inicial sin alterar otros proyectos.",
+        bytes: 928,
+        agg: 1366,
+        savings: 87.0,
+        passText: "Frío (5 turnos · 9.240 tok)",
+        passPct: 20,
+        passColor: "#f87171",
+        logs: [
+          { cls: "log-info", txt: "[SessionStart] Detectado proyecto nuevo -> memory_init(prefix='MLD', scopes=['binarios_ba2_y_compilador', 'combate_ia_y_actores'])." },
+          { cls: "log-warn", txt: "[Sesión 1 - Sin memoria previa] El agente asume máscara 0x00FFFFFF en plugin .esl -> 5 turnos y 9.240 tokens consumidos." }
+        ]
+      },
+      {
+        step: "Etapa 2 / 6",
+        focus: "s5",
+        title: "Etapa 2 — Compuerta Anti-Envenenamiento (Bloqueo)",
+        desc: "Una hipótesis sin verificar intenta anotar que cambiar el orden de carga corrige el FormID None, mientras Papyrus.0.log sigue lanzando errores. La compuerta rechaza la escritura.",
+        bytes: 928,
+        agg: 1366,
+        savings: 87.0,
+        passText: "Bloqueo Anti-Poisoning",
+        passPct: 35,
+        passColor: "#fbbf24",
+        logs: [
+          { cls: "log-err", txt: "[memory_record] exit_code=1, log_errors=['Cannot call AddItem() on a None object'] -> REJECTED_MEMORY_POISONING." },
+          { cls: "log-ok", txt: "[Integridad] Ninguna conjetura falsa contamina el diario del estudio." }
+        ]
+      },
+      {
+        step: "Etapa 3 / 6",
+        focus: "s3",
+        title: "Etapa 3 — Consolidación en Dos Fases (PROVISIONAL → VERIFIED)",
+        desc: "Tras compilar con exit_code=0 aplicando la máscara de 12 bits (0x00000FFF), el hallazgo nace en PROVISIONAL (bloqueando promoción prematura) y pasa a VERIFIED al confirmarse en partida limpia.",
+        bytes: 928,
+        agg: 1366,
+        savings: 88.3,
+        passText: "MLD-EP-001 VERIFIED",
+        passPct: 58,
+        passColor: "#38bdf8",
+        logs: [
+          { cls: "log-info", txt: "[memory_record] MLD-EP-001 guardado como PROVISIONAL con Trampa Semántica + Provenance." },
+          { cls: "log-warn", txt: "[memory_lifecycle] promote prematuro rechazado (REJECTED_PROMOTION)." },
+          { cls: "log-ok", txt: "[memory_lifecycle] Prueba en vivo coc SanctuaryExt OK -> status=VERIFIED." }
+        ]
+      },
+      {
+        step: "Etapa 4 / 6",
+        focus: "s4",
+        title: "Etapa 4 — Sesión 2: Búsqueda BM25 + Convergencia Pass@1",
+        desc: "Días después, en una sesión limpia, el agente lee el índice ligero, consulta FTS5/BM25 y aplica 0x00000FFF a la primera en 1 solo turno (1.120 tok vs 9.240 tok: 87,9 % de ahorro).",
+        bytes: 928,
+        agg: 1366,
+        savings: 87.9,
+        passText: "Pass@1 (1 turno · 1.120 tok)",
+        passPct: 90,
+        passColor: "#4ade80",
+        logs: [
+          { cls: "log-info", txt: "[memory_search] Query 'HEDR BA2 12 bits 0x00000FFF' -> Hit #1 BM25=-14.708 en milisegundos." },
+          { cls: "log-ok", txt: "[Convergencia] Pass@1 en 1 turno (1.120 tokens). Ahorro de misión: 8.120 tokens (87,9 %)." }
+        ]
+      },
+      {
+        step: "Etapa 5 / 6",
+        focus: "s5",
+        title: "Etapa 5 — Ascenso Autónomo N ≥ 2 a Capa L1 (model_decision)",
+        desc: "Al reaparecer el patrón por segunda vez, memory_lifecycle(promote) crea la invariante MLD-INV-01 en .agents/rules/binarios-ba2-y-compilador.md (790 B), dejando AGENTS.md intacto.",
+        bytes: 936,
+        agg: 1366,
+        savings: 88.3,
+        passText: "Especialista N≥2 (L1 activa)",
+        passPct: 100,
+        passColor: "#4ade80",
+        logs: [
+          { cls: "log-info", txt: "[memory_lifecycle] recurrence MLD-EP-001 -> N=2 (ready_for_promotion=true)." },
+          { cls: "log-ok", txt: "[promote] Creada .agents/rules/binarios-ba2-y-compilador.md (790 B, model_decision). AGENTS.md sigue en 936 B." }
+        ]
+      },
+      {
+        step: "Etapa 6 / 6",
+        focus: "s6",
+        title: "Etapa 6 — Guardián Stop y Detección de Expansión @[include]",
+        desc: "Si durante un turno crece AGENTS.md por encima de 16.000 B o una regla enlaza un anexo pesado vía @[anexo], el hook Stop solicita refactorización (continue) y corta bucles con continuationActive.",
+        bytes: 19088,
+        agg: 5800,
+        savings: 88.3,
+        passText: "Guardián Stop Activo",
+        passPct: 100,
+        passColor: "#fbbf24",
+        logs: [
+          { cls: "log-warn", txt: "[audit] regla-con-anexo.md: 114 B crudos -> 18.317 B efectivos tras expandir @[anexo] (WARNING)." },
+          { cls: "log-err", txt: "[hook-stop] AGENTS.md creció a 19.088 B -> decision='continue' (refactorizar a Capa L1)." },
+          { cls: "log-ok", txt: "[hook-stop] Tras refactorizar / continuationActive=True -> decision='stop'. Sistema protegido." }
+        ]
+      }
+    ];
+
+    const codeContainer = document.getElementById("codeContainer");
+    const bannerText = document.getElementById("bannerText");
+    const activeFileBadge = document.getElementById("activeFileBadge");
+    const terminalLog = document.getElementById("terminalLog");
+
+    function renderCode() {
+      codeContainer.innerHTML = CODE_LINES.map((item, idx) => {
+        const lineNo = idx + 1;
+        return `<div class="code-line" data-section="${item.s}"><span class="ln">${lineNo}</span><span>${item.html || " "}</span></div>`;
+      }).join("");
+    }
+
+    function setFocus(sectionId) {
+      document.querySelectorAll("#spotlightButtons .btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.focus === sectionId);
+      });
+      const info = FOCUS_INFO[sectionId];
+      if (info) {
+        bannerText.innerHTML = info.banner;
+        activeFileBadge.textContent = info.badge;
+      }
+      let firstMatch = null;
+      document.querySelectorAll(".code-line").forEach((el) => {
+        const match = el.dataset.section === sectionId;
+        el.classList.toggle("spotlight", match);
+        el.classList.toggle("dimmed", !match);
+        if (match && !firstMatch) firstMatch = el;
+      });
+      if (firstMatch) {
+        const offset = Math.max(0, firstMatch.offsetTop - codeContainer.offsetTop - 24);
+        codeContainer.scrollTo({ top: offset, behavior: "smooth" });
+      }
+    }
+
+    let currentStage = 0;
+    let simTimer = null;
+
+    function applyStage(idx) {
+      const st = SIM_STAGES[idx];
+      if (!st) return;
+      setFocus(st.focus);
+      document.getElementById("stepCounter").textContent = st.step;
+      document.getElementById("stageTitle").textContent = st.title;
+      document.getElementById("stageDesc").textContent = st.desc;
+
+      const bytesPct = Math.min(100, (st.bytes / 24000) * 100);
+      const barBytes = document.getElementById("barBytes");
+      barBytes.style.width = bytesPct.toFixed(1) + "%";
+      barBytes.style.background = st.bytes >= 16000 ? "#fbbf24" : "#4ade80";
+      document.getElementById("mBytes").textContent = st.bytes.toLocaleString("es-ES") + " B";
+
+      const aggPct = Math.min(100, (st.agg / 20000) * 100);
+      document.getElementById("barAgg").style.width = aggPct.toFixed(1) + "%";
+      document.getElementById("mAgg").textContent = st.agg.toLocaleString("es-ES") + " tok";
+
+      document.getElementById("barSavings").style.width = st.savings.toFixed(1) + "%";
+      document.getElementById("barSavings").style.background = "#38bdf8";
+      document.getElementById("mSavings").textContent = st.savings.toFixed(1).replace(".", ",") + " %";
+
+      document.getElementById("barPass").style.width = st.passPct + "%";
+      document.getElementById("barPass").style.background = st.passColor;
+      document.getElementById("mPass").textContent = st.passText;
+
+      st.logs.forEach((l) => {
+        const div = document.createElement("div");
+        div.className = "log-entry " + l.cls;
+        div.textContent = l.txt;
+        terminalLog.appendChild(div);
+      });
+      terminalLog.scrollTop = terminalLog.scrollHeight;
+    }
+
+    function resetSim() {
+      if (simTimer) {
+        clearInterval(simTimer);
+        simTimer = null;
+      }
+      currentStage = 0;
+      document.getElementById("simStatusBadge").textContent = "Listo";
+      document.getElementById("stepCounter").textContent = "Etapa 0 / 6";
+      document.getElementById("stageTitle").textContent = "Estado Inicial: Estación Auditada";
+      document.getElementById("stageDesc").textContent = "Pulsa «▶ Ejecutar Simulación» o «⏭ Paso a Paso» para observar cómo el agente pasa de cometer errores repetidos en frío a convertirse en un especialista verificado con Pass@1 y vigilancia de presupuestos.";
+      document.getElementById("barBytes").style.width = "3.9%";
+      document.getElementById("barBytes").style.background = "#4ade80";
+      document.getElementById("mBytes").textContent = "928 B";
+      document.getElementById("barAgg").style.width = "10.4%";
+      document.getElementById("mAgg").textContent = "2.082 tok";
+      document.getElementById("barSavings").style.width = "88.3%";
+      document.getElementById("mSavings").textContent = "88,3 %";
+      document.getElementById("barPass").style.width = "18%";
+      document.getElementById("barPass").style.background = "#94a3b8";
+      document.getElementById("mPass").textContent = "En espera";
+      terminalLog.innerHTML = [
+        `<div class="log-entry log-muted">[init] Estación real verificada: 29 episodios VERIFIED activos (DC: 7, FO4: 8, CP77: 14).</div>`,
+        `<div class="log-entry log-muted">[init] Regla global GEMINI.md depurada: 5.321 B → 1.364 B (1.117 tok Always-On globales).</div>`
+      ].join("");
+      setFocus("s1");
+    }
+
+    document.querySelectorAll("#spotlightButtons .btn").forEach((btn) => {
+      btn.addEventListener("click", () => setFocus(btn.dataset.focus));
+    });
+
+    document.getElementById("btnNextStep").addEventListener("click", () => {
+      if (simTimer) {
+        clearInterval(simTimer);
+        simTimer = null;
+      }
+      if (currentStage < SIM_STAGES.length) {
+        document.getElementById("simStatusBadge").textContent = "Paso Manual";
+        applyStage(currentStage);
+        currentStage += 1;
+        if (currentStage === SIM_STAGES.length) {
+          document.getElementById("simStatusBadge").textContent = "Completado";
+        }
+      }
+    });
+
+    document.getElementById("btnRunAll").addEventListener("click", () => {
+      resetSim();
+      document.getElementById("simStatusBadge").textContent = "Ejecutando...";
+      applyStage(0);
+      currentStage = 1;
+      simTimer = setInterval(() => {
+        if (currentStage >= SIM_STAGES.length) {
+          clearInterval(simTimer);
+          simTimer = null;
+          document.getElementById("simStatusBadge").textContent = "Completado";
+          return;
+        }
+        applyStage(currentStage);
+        currentStage += 1;
+      }, 1300);
+    });
+
+    document.getElementById("btnReset").addEventListener("click", resetSim);
+
+    renderCode();
+    resetSim();
+  </script>
+</body>
+</html>

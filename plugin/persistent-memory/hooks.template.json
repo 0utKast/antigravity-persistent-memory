@@ -1,0 +1,20 @@
+{
+  "persistent-memory-session-start": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "__PYTHON_CMD__ __MEMCTL_PATH__ hook-session-start",
+        "timeout": 10
+      }
+    ]
+  },
+  "persistent-memory-budget-guard": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "__PYTHON_CMD__ __MEMCTL_PATH__ hook-stop",
+        "timeout": 10
+      }
+    ]
+  }
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Antigravity Persistent Memory (L0–L3) • Local-First AI Agent Architecture</title>
+  <style>
+    :root {
+      --bg: #080d14;
+      --panel: #0f1724;
+      --panel-alt: #131e30;
+      --border: #23324d;
+      --text: #e6eef9;
+      --muted: #93a7c3;
+      --cyan: #38bdf8;
+      --green: #22c55e;
+      --amber: #eab308;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, #11223a 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 28px 20px 60px; }
+    header {
+      background: linear-gradient(135deg, rgba(16, 28, 46, 0.96), rgba(9, 14, 22, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--cyan);
+    }
+    .pill.green {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.38);
+      color: #86efac;
+    }
+    .pill.amber {
+      background: rgba(234, 179, 8, 0.12);
+      border-color: rgba(234, 179, 8, 0.38);
+      color: #fde047;
+    }
+    h1 { font-size: 28px; color: #f8fafc; margin-bottom: 10px; }
+    .lead { color: #cbd5e1; font-size: 15.5px; margin-bottom: 18px; max-width: 920px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel-alt);
+      color: #f8fafc;
+    }
+    .cta.primary {
+      background: #0284c7;
+      border-color: var(--cyan);
+      color: #ffffff;
+    }
+    .cta.green {
+      background: #14532d;
+      border-color: var(--green);
+      color: #dcfce7;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; margin-bottom: 22px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 19px; color: #f8fafc; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+    pre {
+      background: #070b12;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      color: #e2e8f0;
+      margin-top: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #1e293b; text-align: left; vertical-align: top; }
+    th { background: #131e30; color: #7dd3fc; font-weight: 600; }
+    tr:hover td { background: rgba(56, 189, 248, 0.04); }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
+    .stat {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .stat strong { display: block; font-size: 22px; color: #38bdf8; }
+    .stat span { font-size: 12.5px; color: var(--muted); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badges">
+        <span class="pill">Antigravity Plugin · L0–L3</span>
+        <span class="pill green">Zero Dependencies · Python 3.10+ · SQLite FTS5</span>
+        <span class="pill amber">MIT + CC BY 4.0 Open License</span>
+      </div>
+      <h1>Antigravity Persistent Memory (L0–L3)</h1>
+      <p class="lead">
+        Sistema <strong>Local-First</strong> de memoria persistente en cuatro capas para convertir a tus agentes de IA en auténticos especialistas mediante experiencia real verificada: diarios en Markdown bajo Git, índice <code>SQLite FTS5 + BM25</code>, servidor MCP federado, compuerta anti-envenenamiento (<code>PROVISIONAL → VERIFIED</code>) y guardianes automáticos de presupuesto (<code>24.000 bytes</code> y <code>20.000 tokens Always-On</code>).
+      </p>
+      <div class="cta-row">
+        <a class="cta primary" href="visualizador_memoria_persistente_antigravity.html">Abrir Laboratorio Interactivo 16:9 (Code Spotlight)</a>
+        <a class="cta green" href="tutorial_memoria_persistente_antigravity.pdf">Descargar Guía Editorial PDF (3 págs. A4)</a>
+        <a class="cta" href="https://github.com/0utKast/antigravity-persistent-memory">Ver Repositorio en GitHub (0utKast)</a>
+      </div>
+    </header>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>Instalación en 1 Comando (Windows / macOS / Linux)</h2>
+        <p>Clona el repositorio e instala automáticamente el plugin, las reglas globales, el servidor MCP <code>persistent_memory</code> y los hooks <code>SessionStart</code> + <code>Stop</code> sin sobrescribir tus servidores existentes:</p>
+        <pre>git clone https://github.com/0utKast/antigravity-persistent-memory.git
+cd antigravity-persistent-memory
+python install_persistent_memory.py</pre>
+        <p style="margin-top:10px;">Para auditar tu estación o probar el ciclo completo de 6 etapas en sandbox sin tocar <code>~/.gemini</code>:</p>
+        <pre>python install_persistent_memory.py --check
+python laboratorio_memoria_persistente_antigravity.py
+python tests/test_persistent_memory_portable.py</pre>
+      </div>
+
+      <div class="card">
+        <h2>Impacto Empírico Medido en Producción</h2>
+        <p>Resultados reales verificados sobre <strong>Fallout 4</strong> (<em>Crónicas del Refugio 13</em>, <em>Piper Wright AI</em>), <strong>Cyberpunk 2077</strong> (<em>Ghost Echo</em>, <em>Chispa NC</em>) y producción automatizada de cursos 4K:</p>
+        <div class="stat-grid">
+          <div class="stat"><strong>87,9 %</strong><span>Ahorro en tokens de misión (Pass@1: 1.120 vs 9.240 tok)</span></div>
+          <div class="stat"><strong>87 % – 90,3 %</strong><span>Ahorro fijo al arrancar mediante índice L2</span></div>
+          <div class="stat"><strong>-78,5 %</strong><span>Rescate real de AGENTS.md (23.585 B → 5.071 B)</span></div>
+          <div class="stat"><strong>29 VERIFIED</strong><span>Lecciones consolidadas con Trampa Semántica</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Arquitectura de 4 Capas (L0–L3) y Presupuestos de Antigravity</h2>
+      <table>
+        <thead>
+          <tr><th>Capa</th><th>Artefactos</th><th>Función y Carga</th><th>Protección de Límites</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>L0 · Constitución</strong></td><td><code>AGENTS.md</code> + <code>GEMINI.md</code></td><td>Carga incondicional (<em>Always-On</em>) al inicio de cada sesión.</td><td>Tope sano &lt; 12 KB, alerta ≥ 16 KB, límite duro 24.000 B y techo 20.000 tok.</td></tr>
+          <tr><td><strong>L1 · Modular</strong></td><td><code>.agents/rules/*.md</code> y <code>SKILL.md</code></td><td>Divulgación progresiva (<code>trigger: model_decision</code>, ~30 tok en reposo).</td><td>Límite 18.000 B efectivos (expandiendo <code>@[label](ruta)</code>). Destino cuando N ≥ 2.</td></tr>
+          <tr><td><strong>L2 · Episódica</strong></td><td><code>MEMORIA_INDICE.md</code> + <code>diarios/*.md</code></td><td><em>Escape Hatch</em> legible en Markdown y versionado en Git.</td><td>Ahorro del 87,0 % al 90,3 % frente a cargar históricos completos.</td></tr>
+          <tr><td><strong>L3 · FTS5 + MCP</strong></td><td><code>memoria_fts.sqlite</code> + <code>memctl.py</code> + <code>hooks.json</code></td><td>Búsqueda BM25 Unicode, federación solo lectura y compuertas.</td><td>Hooks <code>SessionStart</code> y <code>Stop</code> anti-bucle sin alterar permisos <code>PreToolUse</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Bibliografía Verificada de O'Reilly Learning (MCP)</h2>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Obra / Charla</th><th>Autor(es)</th><th>Identificador URN</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><a href="https://learning.oreilly.com/videos/-/0642572475086/?orm_source=mcp">Memory for Personal AI with Duncan Davidson</a></td><td>Ben Lorica, Duncan Davidson</td><td><code>urn:orm:video:0642572475086</code></td></tr>
+          <tr><td>2</td><td><a href="https://learning.oreilly.com/library/view/-/0642572370473/?orm_source=mcp">Agent Memory</a></td><td>Benjamin Labaschin</td><td><code>urn:orm:book:0642572370473</code></td></tr>
+          <tr><td>3</td><td><a href="https://learning.oreilly.com/library/view/-/9798341661257/?orm_source=mcp">Managing Memory for AI Agents</a></td><td>Benjamin Labaschin et al.</td><td><code>urn:orm:book:9798341661257</code></td></tr>
+          <tr><td>4</td><td><a href="https://learning.oreilly.com/videos/-/0642572428136/?orm_source=mcp">Expert Showcase: Agent Memory</a></td><td>Ksenia Se, Lewis Liu, Pete Johnson</td><td><code>urn:orm:video:0642572428136</code></td></tr>
+          <tr><td>5</td><td><a href="https://learning.oreilly.com/live-events/-/0642572457082/?orm_source=mcp">Build Self-Improving Agents with Memory, Traces, and Skills</a></td><td>Richmond Alake</td><td><code>urn:orm:live-event-series:0642572457082</code></td></tr>
+          <tr><td>6</td><td><a href="https://learning.oreilly.com/library/view/-/0642572392291/?orm_source=mcp">Agentic Engineering</a></td><td>Addy Osmani</td><td><code>urn:orm:book:0642572392291</code></td></tr>
+          <tr><td>7</td><td><a href="https://learning.oreilly.com/library/view/-/0642572422783/?orm_source=mcp">Harness Engineering</a></td><td>Nicole Koenigstein</td><td><code>urn:orm:book:0642572422783</code></td></tr>
+          <tr><td>8</td><td><a href="https://learning.oreilly.com/library/view/-/0642572260705/?orm_source=mcp">The Context Engineering Handbook</a></td><td>Drew Breunig</td><td><code>urn:orm:book:0642572260705</code></td></tr>
+          <tr><td>9</td><td><a href="https://learning.oreilly.com/library/view/-/0642572294809/?orm_source=mcp">Agentic Reliability Engineering</a></td><td>David Jambor</td><td><code>urn:orm:book:0642572294809</code></td></tr>
+          <tr><td>10</td><td><a href="https://learning.oreilly.com/library/view/-/0642572354664/?orm_source=mcp">Architecting Data Systems for AI Agents</a></td><td>Firat Tekiner</td><td><code>urn:orm:book:0642572354664</code></td></tr>
+          <tr><td>11</td><td><a href="https://learning.oreilly.com/library/view/-/9781351974271/?orm_source=mcp">Game Engine Architecture, 3rd Edition</a></td><td>Jason Gregory</td><td><code>urn:orm:book:9781351974271</code></td></tr>
+          <tr><td>12</td><td><a href="https://learning.oreilly.com/library/view/-/9781098166298/?orm_source=mcp">AI Engineering</a></td><td>Chip Huyen</td><td><code>urn:orm:book:9781098166298</code></td></tr>
+          <tr><td>13</td><td><a href="https://learning.oreilly.com/library/view/-/9781098176495/?orm_source=mcp">Building Applications with AI Agents</a></td><td>Michael Albada</td><td><code>urn:orm:book:9781098176495</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      Publicado bajo licencia abierta dual (<a href="LICENSE">MIT + CC BY 4.0</a>) por <a href="https://github.com/0utKast">Jesús Conde (0utKast)</a>.
+    </footer>
+  </div>
+</body>
+</html>
