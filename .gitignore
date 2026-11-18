@@ -9,10 +9,16 @@ memoria/.cache/
 ._*
 *.backup_*.tscproj
 *.bak*
+*.tscproj
 audio_es/
 audio_en/
 slides_4k_pool/
 selected_slides_4k/
+capturas_lab/
 *.mp3
 *.wav
 *.mp4
+Arquitectura_de_Memoria_L0-L3.pdf
+Memoria_Persistente_para_Agentes_de_IA.pdf
+L0-L3_AI_Memory_Blueprint.pdf
+Persistent_AI_Agent_Memory_Architecture.pdf

@@ -1,52 +1,99 @@
-# Título y Descripción Validada para YouTube Studio
+# Metadatos para YouTube Studio — Memoria Persistente Local-First en Antigravity (L0–L3)
 
-**Título recomendado:** Memoria Persistente en Antigravity (L0–L3): Cómo Convertir la Práctica Real con Agentes en Especialistas
+- **Duración verificada del montaje (`001MemoriaPersistente.tscproj`):** `18:31` (`1110.72 s` reales en timeline 4K @ 60 fps)
+- **Repositorio GitHub (código + plugin instalable):** https://github.com/0utKast/antigravity-persistent-memory
+- **Portal GitHub Pages:** https://0utkast.github.io/antigravity-persistent-memory/
+- **Visualizador HTML Code Spotlight:** https://0utkast.github.io/antigravity-persistent-memory/visualizador_memoria_persistente_antigravity.html
+- **Guía técnica PDF (A4):** https://0utkast.github.io/antigravity-persistent-memory/tutorial_memoria_persistente_antigravity.pdf
+- **Perfil Nexus Mods (`jesusconde`):** https://www.nexusmods.com/profile/jesusconde/mods
+- **Curso hermano de Modding Fallout 4:** https://github.com/0utKast/fallout-modding-course
 
 ---
 
-## Descripción Lista para Copiar y Pegar en YouTube Studio
+## 1. Opciones de Título (≤ 100 caracteres)
+
+**Opción 1 (Recomendada — enfoque problema real → especialización):**
+```text
+Memoria Persistente en Antigravity (L0–L3): Cómo Convertir Agentes de IA en Especialistas Reales
+```
+
+**Opción 2 (Enfoque práctico + Plugin MCP):**
+```text
+Cómo Dar Memoria Persistente a tus Agentes de IA (Antigravity L0–L3): Casos Reales y Plugin MCP
+```
+
+**Opción 3 (Directa y técnica):**
+```text
+Arquitectura de Memoria Persistente L0–L3 en Antigravity: Agentes IA sin Amnesia (MCP)
+```
+
+---
+
+## 2. Descripción completa para YouTube Studio (< 4.800 caracteres, copiar y pegar)
 
 ```text
-¿Por qué un agente de IA brillante que domina la teoría de motores de videojuegos vuelve a cometer los mismos errores cuando abres una conversación nueva al día siguiente?
+¿Por qué un agente de IA vuelve a tropezar con el mismo bug al abrir una nueva sesión? No falta teoría en el modelo, sino memoria operativa: cada reinicio borra lo aprendido frente al binario real.
 
-En este videotutorial práctico mostramos cómo trabajamos diariamente con Antigravity creando mods complejos para Fallout 4 (Crónicas del Refugio 13, Piper Wright AI Companion) y Cyberpunk 2077 (Ghost Echo, Chispa NC) junto con nuestra tubería de cursos 4K, y cómo transformamos esas investigaciones reales en un sistema de Memoria Persistente Local-First en 4 capas (L0-L3) que convierte con el tiempo a los agentes en auténticos especialistas.
+Construimos un sistema de Memoria Persistente Local-First en 4 capas (L0–L3) para Google Antigravity que convierte fallos reales en Fallout 4, Cyberpunk 2077 y Camtasia 4K en experiencia acumulativa.
 
-QUÉ RESOLVEMOS Y CONSTRUIMOS EN ESTE VÍDEO:
+🚀 QUÉ APRENDERÁS:
+• Teoría clásica frente al binario real en Windows (Papyrus FO4, REDscript en Cyberpunk 2077 y JSON UTF-8 en Camtasia).
+• Límite oculto de truncamiento en Antigravity: 24.000 bytes en AGENTS.md (98,3 % en FO4) y 20.000 tokens.
+• Arquitectura L0–L3 en Markdown bajo Git + SQLite FTS5/BM25 en Python puro (sin dependencias externas).
+• Defensa contra Memory Poisoning: PROVISIONAL → VERIFIED, Trampa Semántica, Provenance y ascenso N ≥ 2.
+• Hooks SessionStart y Guardián Stop, consultas federadas y simulación con 87,9 % de ahorro en tokens.
 
-1. El choque entre conocimiento teórico y realidad empírica:
-Casos reales capturados en producción (fuego amigo en Creation Engine, SetPosition congelado en .fos, máscara de 12 bits 0x00000FFF en .esl, carrera de 150 ms en Audioware, LinearWipe_0 en Redscript y rangeEnd UTF-8 en Camtasia).
+🔗 ENLACES Y RECURSOS GRATUITOS:
+• Repo oficial e instalador (GitHub): https://github.com/0utKast/antigravity-persistent-memory
+• Portal interactivo (GitHub Pages): https://0utkast.github.io/antigravity-persistent-memory/
+• Visualizador Code Spotlight (4 labs): https://0utkast.github.io/antigravity-persistent-memory/visualizador_memoria_persistente_antigravity.html
+• Guía técnica PDF (A4): https://0utkast.github.io/antigravity-persistent-memory/tutorial_memoria_persistente_antigravity.pdf
+• Nexus Mods (jesusconde): https://www.nexusmods.com/profile/jesusconde/mods
+• Curso Modding Fallout 4: https://github.com/0utKast/fallout-modding-course
 
-2. Los límites reales de Antigravity (24.000 bytes y 20.000 tokens):
-Cómo detectamos que nuestro archivo principal de Fallout 4 había escalado a 23.585 bytes (98,3 % antes del truncamiento silencioso) y cómo lo rescatamos reduciéndolo a 5.071 bytes (-78,5 %) junto con la limpieza global de GEMINI.md (5.321 B → 1.364 B).
+⚡ INSTALACIÓN RÁPIDA EN ANTIGRAVITY:
+git clone https://github.com/0utKast/antigravity-persistent-memory.git
+cd antigravity-persistent-memory
+python install_persistent_memory.py
 
-3. Arquitectura Local-First en 4 capas (Duncan Davidson + O'Reilly MCP):
-- Capa L0 (AGENTS.md): Constitución compacta Always-On por debajo de 12.000 bytes.
-- Capa L1 (.agents/rules/*.md): Reglas modulares bajo demanda (trigger: model_decision) para ascensos N mayor o igual que 2.
-- Capa L2 (MEMORIA_INDICE.md + diarios en Git): Escotilla de escape en Markdown con 87,0 % a 90,3 % de ahorro fijo en contexto.
-- Capa L3 (SQLite FTS5 + BM25 + Servidor MCP): Búsqueda Unicode segura, federación de solo lectura entre proyectos, compuerta PROVISIONAL → VERIFIED anti-Memory Poisoning y guardianes automáticos SessionStart + Stop.
+⏱️ MARCADORES DE TIEMPO:
+00:00 Dirección técnica con Antigravity y proyectos reales del estudio
+01:03 Teoría de motores (Jason Gregory) frente al ejecutable real en Windows
+01:52 El ciclo destructivo de la amnesia operativa al cerrar sesión
+02:30 Casos reales en Fallout 4: fuego amigo en Adytum y terminales en West Tek
+04:17 Lab 1: Cyberpunk 2077 (Audioware 150 ms) y Camtasia 4K (bytes UTF-8)
+05:33 El límite oculto en Antigravity: 24.000 bytes (98,3 % en FO4) y 20.000 tokens
+07:40 Duncan Davidson y O'Reilly MCP: enfoque Local-First y Escotilla de Escape
+08:47 Las 4 memorias del agente y prevención del Memory Poisoning
+09:51 Arquitectura en 4 capas (L0–L3): Constitución L0 y reglas modulares L1
+11:23 Capas L2 y L3: Ahorro del 90 % con índice en Git, SQLite FTS5 y federación MCP
+12:35 Lab 3: Motor Python sin dependencias y saneador FTS5 para modding
+13:28 Compuerta anti-envenenamiento (PROVISIONAL → VERIFIED) y ascenso N ≥ 2
+14:35 Hooks nativos SessionStart y Guardián Stop anti-bucle
+15:16 Telemetría real de la estación: 29 episodios VERIFIED y consultas federadas
+16:11 Lab 4: Simulador de 6 etapas (arranque en frío vs. Pass@1 con 87,9 % de ahorro)
+17:27 Cierre: De asistente generalista a especialista veterano e instalación abierta
 
-4. Resultados verificados en nuestro laboratorio:
-- 29 episodios VERIFIED activos en nuestra estación real (DesarrolloCursos, Mods_Fallout y Mods_cyberpunk2077).
-- Simulación sandbox: de 5 turnos y 9.240 tokens en frío a convergencia Pass@1 en 1 turno con 1.120 tokens (87,9 % de ahorro).
+📚 BIBLIOGRAFÍA EN O'REILLY LEARNING (vía O'Reilly MCP):
+• Context Engineering for Coding Agents (Davidson): https://learning.oreilly.com/videos/-/0642572475086/?orm_source=mcp
+• Agent Memory (Labaschin): https://learning.oreilly.com/library/view/-/0642572370473/?orm_source=mcp
+• Managing Memory for AI Agents (Labaschin et al.): https://learning.oreilly.com/library/view/-/9798341661257/?orm_source=mcp
+• Expert Showcase: Agent Memory (Se & Johnson): https://learning.oreilly.com/videos/-/0642572428136/?orm_source=mcp
+• Build Self-Improving Agents (Alake): https://learning.oreilly.com/live-events/-/0642572457082/?orm_source=mcp
+• Agentic Engineering (Osmani): https://learning.oreilly.com/library/view/-/0642572392291/?orm_source=mcp
+• Harness Engineering (Koenigstein): https://learning.oreilly.com/library/view/-/0642572422783/?orm_source=mcp
+• The Context Engineering Handbook (Breunig): https://learning.oreilly.com/library/view/-/0642572260705/?orm_source=mcp
+• Game Engine Architecture (Gregory): https://learning.oreilly.com/library/view/-/9781351974271/?orm_source=mcp
 
-MARCADORES DE TIEMPO (TIMESTAMPS)
+📄 LICENCIA: Código MIT y documentación CC BY 4.0. Bibliografía ampliada en tutorial_memoria_persistente_antigravity.md.
 
-00:00 Cómo trabajamos con Antigravity y la paradoja del agente amnésico
-02:15 Trampas inesperadas en Fallout 4, Cyberpunk 2077 y Camtasia 4K
-05:15 El límite oculto en producción: 24.000 bytes y 20.000 tokens
-07:35 Duncan Davidson y O'Reilly MCP: Local-First y Escotilla de Escape
-10:00 Arquitectura real en 4 capas (L0-L3) y federación entre proyectos
-12:25 Anatomía del motor: FTS5, Trampa Semántica, compuerta y guardián Stop
-15:10 Laboratorio en vivo: simulación Pass@1 y telemetría real
-17:00 Cierre: de asistente generalista a especialista veterano
+#Antigravity #AgentesIA #MemoriaPersistente #MCP #SQLiteFTS5 #LocalFirst #ContextEngineering #Modding #Fallout4 #Cyberpunk2077
+```
 
-MATERIALES DEL TUTORIAL (DesarrolloCursos)
+---
 
-- laboratorio_memoria_persistente_antigravity.py → Auditoría real + simulador de 6 etapas.
-- visualizador_memoria_persistente_antigravity.html → Laboratorio interactivo Code Spotlight 16:9.
-- tutorial_memoria_persistente_antigravity.md / .pdf → Guía completa con diagramas y 13 referencias O'Reilly.
-- guion_narrativo, texto_diapositivas y locucion_elevenlabs → Guion y doble versión de narración.
-- plantillas_referencia/ → Plantillas plugin.json, hooks.json, L0, L1 y L2 listas para usar.
+## 3. Etiquetas (Tags) para YouTube Studio (≤ 500 caracteres)
 
-#Antigravity #MemoriaPersistente #AgentesIA #ContextEngineering #Modding #Fallout4 #Cyberpunk2077 #OReilly #DuncanDavidson #LocalFirst
+```text
+Antigravity, memoria persistente IA, agentes IA, Model Context Protocol, MCP server, SQLite FTS5, BM25, context engineering, memory poisoning, agentes autonomos, Gemini Antigravity, AGENTS.md, ingenieria de contexto, modding Fallout 4, modding Cyberpunk 2077, Camtasia automatizado, Python MCP, desarrollo con IA, tutorial IA en espanol, arquitectura L0 L3
 ```
